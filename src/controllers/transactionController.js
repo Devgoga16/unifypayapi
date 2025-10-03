@@ -1,5 +1,4 @@
 const Transaction = require('../models/Transaction');
-const { v4: uuidv4 } = require('uuid');
 
 // @desc    Get all transactions
 // @route   GET /api/transactions
@@ -79,6 +78,7 @@ const createTransaction = async (req, res) => {
   try {
     // Generate unique ID if not provided
     if (!req.body.id_transaccion) {
+      const { v4: uuidv4 } = await import('uuid');
       req.body.id_transaccion = uuidv4();
     }
 

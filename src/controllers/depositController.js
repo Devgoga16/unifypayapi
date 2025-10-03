@@ -1,6 +1,5 @@
 const Deposit = require('../models/Deposit');
 const Transaction = require('../models/Transaction');
-const { v4: uuidv4 } = require('uuid');
 
 // @desc    Get all deposits
 // @route   GET /api/deposits
@@ -80,6 +79,7 @@ const createDeposit = async (req, res) => {
   try {
     // Generate unique ID if not provided
     if (!req.body.id_deposito) {
+      const { v4: uuidv4 } = await import('uuid');
       req.body.id_deposito = uuidv4();
     }
 
