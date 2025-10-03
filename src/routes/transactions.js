@@ -65,6 +65,18 @@ const router = express.Router();
  *         notas:
  *           type: string
  *           description: Optional notes
+ *         archivo_adjunto:
+ *           type: string
+ *           description: Base64 encoded file attachment (without data URL prefix)
+ *         archivo_nombre:
+ *           type: string
+ *           description: Original filename of the attached file
+ *         archivo_tipo:
+ *           type: string
+ *           description: MIME type of the attached file (image/jpeg, application/pdf, etc.)
+ *         archivo_tamaño:
+ *           type: number
+ *           description: File size in bytes
  */
 
 /**
@@ -210,14 +222,46 @@ router.route('/codigo/:codigo').get(getTransactionByCodigo);
  * @swagger
  * /api/transactions:
  *   post:
- *     summary: Create a new transaction
+ *     summary: Create a new transaction with optional file upload
  *     tags: [Transactions]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Transaction'
+ *             allOf:
+ *               - $ref: '#/components/schemas/Transaction'
+ *               - type: object
+ *                 properties:
+ *                   archivo:
+ *                     type: string
+ *                     description: Base64 data URL for file upload (data:mime/type;base64,content)
+ *                     example: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ..."
+ *                   archivo_nombre:
+ *                     type: string
+ *                     description: Original filename for upload
+ *                     example: "recibo.jpg"
+ *           examples:
+ *             with_file:
+ *               summary: Transaction with file attachment
+ *               value:
+ *                 descripcion_transaccion: "Pago de servicios"
+ *                 monto_transaccion: 150.00
+ *                 tipo_transaccion: "egreso"
+ *                 moneda: "USD"
+ *                 medio_pago: "tarjeta"
+ *                 estado: "confirmada"
+ *                 archivo: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ..."
+ *                 archivo_nombre: "recibo_pago.jpg"
+ *             without_file:
+ *               summary: Transaction without file
+ *               value:
+ *                 descripcion_transaccion: "Venta de producto"
+ *                 monto_transaccion: 100.00
+ *                 tipo_transaccion: "ingreso"
+ *                 moneda: "USD"
+ *                 medio_pago: "efectivo"
+ *                 estado: "confirmada"
  *     responses:
  *       201:
  *         description: Transaction created successfully
@@ -231,7 +275,21 @@ router.route('/codigo/:codigo').get(getTransactionByCodigo);
  *                 data:
  *                   $ref: '#/components/schemas/Transaction'
  *       400:
- *         description: Bad request
+ *         description: Bad request - Invalid file format, size too large, or missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   examples:
+ *                     invalid_file: "Formato de archivo inválido. Debe ser base64."
+ *                     file_too_large: "El archivo es muy grande. Máximo 5MB permitido."
+ *                     invalid_type: "Tipo de archivo no permitido. Solo se permiten: JPG, PNG, PDF, TXT"
  */
 router.route('/').post(createTransaction);
 

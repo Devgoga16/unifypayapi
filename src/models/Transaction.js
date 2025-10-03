@@ -52,6 +52,26 @@ const transactionSchema = new mongoose.Schema({
   notas: {
     type: String,
     required: false
+  },
+  archivo_adjunto: {
+    type: String,
+    required: false,
+    // Base64 encoded file
+  },
+  archivo_nombre: {
+    type: String,
+    required: false,
+    // Original filename
+  },
+  archivo_tipo: {
+    type: String,
+    required: false,
+    // MIME type (image/jpeg, application/pdf, etc.)
+  },
+  archivo_tamaño: {
+    type: Number,
+    required: false,
+    // File size in bytes
   }
 }, {
   timestamps: true

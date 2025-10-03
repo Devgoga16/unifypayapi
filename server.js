@@ -11,6 +11,7 @@ const { specs, swaggerUi } = require('./src/config/swagger');
 const transactionRoutes = require('./src/routes/transactions');
 const depositRoutes = require('./src/routes/deposits');
 const dashboardRoutes = require('./src/routes/dashboard');
+const balanceRoutes = require('./src/routes/balance');
 
 // Connect to database
 connectDB();
@@ -35,6 +36,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/deposits', depositRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/balance', balanceRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -56,6 +58,7 @@ app.get('/', (req, res) => {
       transactions: '/api/transactions',
       deposits: '/api/deposits',
       dashboard: '/api/dashboard',
+      balance: '/api/balance',
       health: '/health'
     }
   });
