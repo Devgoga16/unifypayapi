@@ -1,0 +1,30 @@
+{
+  "name": "unifypayapi",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'Build step not required'",
+    "vercel-build": "echo 'Vercel build step'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["unifypay", "api", "transactions", "deposits", "mongodb", "express"],
+  "author": "UnifyPay Team",
+  "license": "ISC",
+  "description": "REST API for UnifyPay system with CRUD operations for transactions and deposits",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "mongoose": "^8.19.0",
+    "morgan": "^1.10.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
