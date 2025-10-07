@@ -22,7 +22,7 @@ const app = express();
 app.use(helmet()); // Security headers
 app.use(cors()); // Enable CORS
 app.use(morgan('combined')); // Logging
-app.use(express.json()); // Parse JSON bodies
+app.use(express.json({ limit: '10mb' })); // Parse JSON bodies with increased limit
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // Swagger Documentation

@@ -73,6 +73,25 @@ const router = express.Router();
  *           type: string
  *           description: Reference to a Transaction ObjectId (will be populated with full transaction data in responses)
  *           example: "6507d1234567890abcdef123"
+ *         archivo:
+ *           type: string
+ *           format: byte
+ *           description: 'Comprobante de pago file in base64 format with data URL prefix (e.g., "data:image/jpeg;base64,/9j/4AAQ...")'
+ *         archivo_nombre:
+ *           type: string
+ *           description: Original filename of the attached comprobante
+ *         archivo_adjunto:
+ *           type: string
+ *           description: Base64 encoded file data (stored in database, read-only)
+ *           readOnly: true
+ *         archivo_tipo:
+ *           type: string
+ *           description: MIME type of the attached file (auto-detected, read-only)
+ *           readOnly: true
+ *         archivo_tamaño:
+ *           type: number
+ *           description: File size in bytes (auto-calculated, read-only)
+ *           readOnly: true
  */
 
 /**
